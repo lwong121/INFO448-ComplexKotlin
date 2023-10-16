@@ -17,6 +17,63 @@ class LibraryTest {
         assertEquals("FIZZBUZZFIZZFIZZBUZZFIZZ", fizzbuzz(1..12))
     }
 
+    // Extra Credit Tests: FIZZBUZZ to 50 and 100
+    @Test fun fizzbuzzToFifty() {
+        assertEquals(
+            "FIZZBUZZFIZZFIZZBUZZFIZZFIZZBUZZFIZZBUZZFIZZFIZZBUZZFIZZFIZZBUZZFIZZBUZZFIZZFIZZBUZZFIZZFIZZBUZZFIZZBUZZ",
+            fizzbuzz(1..50))
+    }
+
+    @Test fun fizzbuzzToOneHundred() {
+        assertEquals(
+            "FIZZBUZZFIZZFIZZBUZZFIZZFIZZBUZZFIZZBUZZFIZZFIZZBUZZFIZZFIZZBUZZFIZZBUZZFIZZFIZZBUZZFIZZFIZZBUZZFIZZBUZZFIZZFIZZBUZZFIZZFIZZBUZZFIZZBUZZFIZZFIZZBUZZFIZZFIZZBUZZFIZZBUZZFIZZFIZZBUZZFIZZFIZZBUZZFIZZBUZZFIZZFIZZBUZZ",
+            fizzbuzz(1..100))
+    }
+
+    // Extra Credit Tests: FIZZ BUZZ DOH!
+    @Test fun fizzbuzzdohToFifteen() {
+        assertEquals(
+            "FIZZBUZZFIZZDOH!FIZZBUZZFIZZDOH!FIZZBUZZ",
+            fizzbuzzdoh(1..15))
+    }
+
+    @Test fun fizzbuzzdohToTwentyOne() {
+        assertEquals(
+            "FIZZBUZZFIZZDOH!FIZZBUZZFIZZDOH!FIZZBUZZFIZZBUZZFIZZDOH!",
+            fizzbuzzdoh(1..21))
+    }
+
+    @Test fun fizzbuzzdohToFifty() {
+        assertEquals(
+            "FIZZBUZZFIZZDOH!FIZZBUZZFIZZDOH!FIZZBUZZFIZZBUZZFIZZDOH!FIZZBUZZFIZZDOH!FIZZBUZZFIZZBUZZDOH!FIZZFIZZBUZZFIZZDOH!FIZZBUZZFIZZDOH!BUZZ",
+            fizzbuzzdoh(1..50))
+    }
+
+    // Extra Credit Tests: fizzbuzzgen
+    @Test fun fizzbuzzgenToFifteen() {
+        val divisorMap = mapOf(3 to "FIZZ", 5 to "BUZZ")
+        val fizzbuzzFun = fizzbuzzgen(divisorMap)
+        assertEquals(
+            "FIZZBUZZFIZZFIZZBUZZFIZZFIZZBUZZ",
+            fizzbuzzFun(1..15))
+    }
+
+    @Test fun fizzbuzzgenToOneHundred() {
+        val divisorMap = mapOf(3 to "FIZZ", 5 to "BUZZ")
+        val fizzbuzzFun = fizzbuzzgen(divisorMap)
+        assertEquals(
+            "FIZZBUZZFIZZFIZZBUZZFIZZFIZZBUZZFIZZBUZZFIZZFIZZBUZZFIZZFIZZBUZZFIZZBUZZFIZZFIZZBUZZFIZZFIZZBUZZFIZZBUZZFIZZFIZZBUZZFIZZFIZZBUZZFIZZBUZZFIZZFIZZBUZZFIZZFIZZBUZZFIZZBUZZFIZZFIZZBUZZFIZZFIZZBUZZFIZZBUZZFIZZFIZZBUZZ",
+            fizzbuzzFun(1..100))
+    }
+
+    @Test fun fizzbuzzdohgenToFifty() {
+        val divisorMap = mapOf(3 to "FIZZ", 5 to "BUZZ", 7 to "DOH!")
+        val fizzbuzzFun = fizzbuzzgen(divisorMap)
+        assertEquals(
+            "FIZZBUZZFIZZDOH!FIZZBUZZFIZZDOH!FIZZBUZZFIZZBUZZFIZZDOH!FIZZBUZZFIZZDOH!FIZZBUZZFIZZBUZZDOH!FIZZFIZZBUZZFIZZDOH!FIZZBUZZFIZZDOH!BUZZ",
+            fizzbuzzFun(1..50))
+    }
+
     @Test fun r1Test() {
         assertEquals(">>> FOO: {BAR}", r1())
     }

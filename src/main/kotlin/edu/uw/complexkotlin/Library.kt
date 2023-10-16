@@ -3,13 +3,56 @@
  */
 package edu.uw.complexkotlin
 
+// Section 1
 // write a lambda using map and fold to solve "FIZZBUZZ" for the first fifteen numbers (0..15).
 // use map() to return a list with "", "FIZZ" (for 3s) or "BUZZ" (for 5s).
 // use fold() to compress the array of strings down into a single string.
 // the final string should look like FIZZBUZZFIZZFIZZBUZZFIZZFIZZBUZZ for 0..15.
 // store this lambda into 'fizzbuzz' so that the tests can call it
-//
-val fizzbuzz : (IntRange) -> String = { _ -> "" }
+val fizzbuzz : (IntRange) -> String = { range ->
+    val results = range.map { n ->
+        if (n == 0) ""
+        else if (n % 3 == 0 && n % 5 == 0) "FIZZBUZZ"
+        else if (n % 3 == 0) "FIZZ"
+        else if (n % 5 == 0) "BUZZ"
+        else ""
+    }
+    results.fold("") { result, currStr -> result + currStr }
+}
+
+// Extra Credit: FIZZ BUZZ DOH!
+val fizzbuzzdoh : (IntRange) -> String = { range ->
+    val results = range.map { n ->
+        var resultForN = ""
+        if (n != 0) {
+            // check each case individually and add it to the string
+            if (n % 3 == 0) resultForN += "FIZZ"
+            if (n % 5 == 0) resultForN += "BUZZ"
+            if (n % 7 == 0) resultForN += "DOH!"
+        }
+        resultForN
+    }
+    results.fold("") { result, currStr -> result + currStr }
+}
+
+// Extra Credit: fizzbuzzgen
+fun fizzbuzzgen(divisorMap: Map<Int, String>): (IntRange) -> String {
+    // generate custom lambda function for fizzbuzz
+    val fizzbuzzCustom : (IntRange) -> String = { range ->
+        // loop through the provided range
+        val results = range.map { n ->
+            var resultForN = ""
+            // check if n is divisible by any of the divisors from the map
+            // and append the corresponding str to the result for n
+            divisorMap.forEach { divisor, str ->
+                if (n != 0 && n % divisor == 0) resultForN += str
+            }
+            resultForN
+        }
+        results.fold("") { resultForN, currStr -> resultForN + currStr }
+    }
+    return fizzbuzzCustom
+}
 
 // Example usage
 /*
@@ -29,29 +72,61 @@ fun Int.times(block: () -> Unit): Unit {
     }
 }
 
+
+// Section 2
 // Use this function
 fun process(message: String, block: (String) -> String): String {
     return ">>> ${message}: {" + block(message) + "}"
 }
-// Create r1 as a lambda that calls process() with message "FOO" 
-// and a block that returns "BAR"
-val r1 = { "" }
 
-// Create r2 as a lambda that calls process() with message "FOO" 
-// and a block that upper-cases r2_message, and repeats it three 
+// Create r1 as a lambda that calls process() with message "FOO"
+// and a block that returns "BAR"
+val r1 = { process("FOO") { "BAR" } }
+
+// Create r2 as a lambda that calls process() with message "FOO"
+// and a block that upper-cases r2_message, and repeats it three
 // times with no spaces: "WOOGAWOOGAWOOGA"
 val r2_message = "wooga"
-val r2 = { "" }
+val r2 = { process("FOO") { r2_message.toUpperCase().repeat(3) } }
 
 
+// Section 3
 // write an enum-based state machine between talking and thinking
-enum class Philosopher { }
+enum class Philosopher {
+    THINKING {
+        override fun signal() = TALKING
+        override fun toString() = "Deep thoughts...."
+    },
+    TALKING {
+        override fun signal() = THINKING
+        override fun toString() = "Allow me to suggest an idea..."
+    };
 
-// create an class "Command" that can be used as a function 
+    abstract fun signal(): Philosopher
+ }
+
+ // Extra Credit: Seneca the Younger
+// Seneca the Younger was one of the most important philosophers of
+// Ancient Rome who made critical contributions to the school of
+// Stoicism that are still very influential till today. In addition
+// to his work in Stoicism, Seneca was also a statesman and a
+// playwright who was known for his tragedies.
+//
+// The philosophical school of Stoicism mainly focuses on studying
+// how to live a virtuous, meaningful, happy, and contented life
+// depite the circumstances.
+
+
+// Section 4
+// create an class "Command" that can be used as a function
 // (provide an "invoke()" function)
 // that takes a single parameter ("message" of type String)
 // primary constructor should take a String argument ("prompt")
 // when invoked, the Command object should return a String c
 // ontaining the prompt and then the message.
 // Example: Command(": ")("Hello!") should print ": Hello!"
-class Command(val prompt: String) { }
+class Command(val prompt: String) {
+    operator fun invoke(message: String): String {
+        return prompt + message
+    }
+}
